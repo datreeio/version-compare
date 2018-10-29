@@ -1,5 +1,5 @@
 {
-  "name": "version-compare",
+  "name": "@datreeio/version-compare",
   "version": "1.0.0",
   "description": "command line script that runs the datree version compare policy",
   "main": "index.js",
