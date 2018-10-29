@@ -11,10 +11,6 @@ program
   .parse(process.argv)
 
 async function main() {
-  console.log('Parameters:')
-  console.log('api key', program.apiKey)
-  console.log('pr', program.prUrl)
-  console.log('payload', program.payload)
   const prUrlArray = program.prUrl.split('/')
   const orgName = prUrlArray[3]
   const repositoryName = prUrlArray[4]
