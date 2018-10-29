@@ -1,7 +1,7 @@
 const program = require('commander')
 const request = require('request-promise-native')
 
-const BASE_URL = 'http://localhost:8000/v1/policy/codecomponents/versions/validate'
+const BASE_URL = 'http://gateway.datree.io/v1/policy/codecomponents/versions/validate'
 
 program
   .usage('Temp message')
@@ -11,6 +11,10 @@ program
   .parse(process.argv)
 
 async function main() {
+  console.log('Parameters:')
+  console.log('api key', program.apiKey)
+  console.log('pr', program.prUrl)
+  console.log('payload', program.payload)
   const prUrlArray = program.prUrl.split('/')
   const orgName = prUrlArray[3]
   const repositoryName = prUrlArray[4]
