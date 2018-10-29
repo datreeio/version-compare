@@ -1,12 +1,16 @@
 const program = require('commander')
 const request = require('request-promise-native')
+const fs = require('fs')
 
 const BASE_URL = 'http://gateway.datree.io/v1/policy/codecomponents/versions/validate'
 
 program
   .usage('Temp message')
   .option('-a, --api-key <api_key>', 'datree api key')
-  .option('-p, --payload <payload>', 'JSON formatted payload of expected and actual code component versions')
+  .option(
+    '-f, --file-name <file_path>',
+    'path to JSON formatted payload of expected and actual code component versions'
+  )
   .option('-u, --pr-url <pull_request_url>', 'pull request url')
   .parse(process.argv)
 
@@ -16,11 +20,13 @@ async function main() {
   const repositoryName = prUrlArray[4]
   const pullRequestNumber = prUrlArray[6]
 
+  const versionsPayload = fs.readFileSync(program.payload)
+
   const body = {
     repositoryOwner: orgName,
     repositoryName,
     pullRequestNumber,
-    codeComponents: JSON.parse(program.payload)
+    codeComponents: JSON.parse(versionsPayload)
   }
 
   const options = {
