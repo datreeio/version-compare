@@ -1,0 +1,30 @@
+{
+  "name": "version-compare",
+  "version": "1.0.0",
+  "description": "command line script that runs the datree version compare policy",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "semantic-release": "npx semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datreeio/version-compare.git"
+  },
+  "author": "guywarburg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/datreeio/version-compare/issues"
+  },
+  "homepage": "https://github.com/datreeio/version-compare#readme",
+  "dependencies": {
+    "commander": "^2.19.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.5"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 120
+  }
+}
