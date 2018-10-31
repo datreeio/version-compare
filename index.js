@@ -1,8 +1,6 @@
 const program = require('commander')
-const request = require('request-promise-native')
-const fs = require('fs')
 
-const BASE_URL = 'http://gateway.datree.io/v1/policy/codecomponents/versions/validate'
+const utils = require('./utils')
 
 program
   .usage('Temp message')
@@ -11,45 +9,28 @@ program
     '-f, --file-path <file_path>',
     'path to JSON formatted payload of expected and actual code component versions'
   )
+  .option('-p, --payload <payload>', 'JSON formatted payload of expected and actual code component versions')
+  .option(
+    '-f, --file-path <file_path>',
+    'path to JSON formatted payload of expected and actual code component versions'
+  )
   .option('-u, --pr-url <pull_request_url>', 'pull request url')
   .parse(process.argv)
 
 async function main() {
-  const prUrlArray = program.prUrl.split('/')
-  const orgName = prUrlArray[3]
-  const repositoryName = prUrlArray[4]
-  const pullRequestNumber = prUrlArray[6]
-
-  const versionsPayload = fs.readFileSync(program.filePath, 'utf8')
-
-  const body = {
-    repositoryOwner: orgName,
-    repositoryName,
-    pullRequestNumber,
-    codeComponents: JSON.parse(versionsPayload)
-  }
-
-  const options = {
-    uri: BASE_URL,
-    headers: {
-      'x-datreeio-api-key': program.apiKey,
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    body: body,
-    json: true
-  }
-
-  const res = await request(options)
-  return res
+  const urlParams = utils.parseUrl(program.prUrl)
+  const versionsPayload = utils.getVersionsPayload(program.filePath, program.payload)
+  await utils.dispatchVersionComparePolicy(program.apiKey, urlParams, versionsPayload)
 }
 
 if (require.main === module) {
   main()
     .then(res => {
       console.log('datree policy is running, check github for more information - ', program.prUrl)
+      process.exitCode = 0
     })
     .catch(err => {
-      console.log('api failure - ', err.message)
+      console.log('Failed to run datree policy - ', err.message)
+      process.exitCode = 1
     })
 }
