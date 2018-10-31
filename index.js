@@ -8,7 +8,7 @@ program
   .usage('Temp message')
   .option('-a, --api-key <api_key>', 'datree api key')
   .option(
-    '-f, --file-name <file_path>',
+    '-f, --file-path <file_path>',
     'path to JSON formatted payload of expected and actual code component versions'
   )
   .option('-u, --pr-url <pull_request_url>', 'pull request url')
@@ -20,7 +20,7 @@ async function main() {
   const repositoryName = prUrlArray[4]
   const pullRequestNumber = prUrlArray[6]
 
-  const versionsPayload = fs.readFileSync(program.payload)
+  const versionsPayload = fs.readFileSync(program.filePath, 'utf8')
 
   const body = {
     repositoryOwner: orgName,
