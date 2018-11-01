@@ -1,12 +1,12 @@
 {
   "name": "@datreeio/version-compare",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "command line script that runs the datree version compare policy",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
     "semantic-release": "npx semantic-release",
-    "version-compare": "node index"
+    "start": "node index"
   },
   "repository": {
     "type": "git",
